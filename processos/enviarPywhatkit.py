@@ -7,58 +7,10 @@ import sys
 #Variáveis 
 
 turma = sys.argv[1] 
-mensagem = sys.argv[2] 
+mensagem1 = sys.argv[2] 
+caminho_arquivo = r"telas\secretaria\comunicacao\bancodedados\matriculasativas.XLSX"
 
-def selecionar_arquivo_xlsx(textoDisplay):
-    try:
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        caminho_arquivo = filedialog.askopenfilename(
-            title=textoDisplay,
-            filetypes=[("Arquivos Excel", "*.xlsx")]
-        )
-
-        if caminho_arquivo is None:
-            messagebox.showwarning("Aviso", "Nenhuma entrada foi fornecida.")
-
-        if caminho_arquivo.strip() == "":
-            messagebox.showerror("Erro", "O Usuario cancelou o processo.")
-            return None
-        
-        return caminho_arquivo
-        
-    except Exception as e:
-        messagebox.showerror("Erro", f"Ocorreu um erro: {e}")
-        return None
-    finally:
-        root.destroy()
             
-def obter_string_popup(titulo="Entrada", mensagem="Digite algo:"):
-    try:
-        root = tk.Tk()
-        root.withdraw()  # Oculta a janela principal
-        root.attributes("-topmost", True)
-
-        resposta = simpledialog.askstring(title=titulo, prompt=mensagem)
-
-        if resposta is None:
-            messagebox.showwarning("Aviso", "Nenhuma entrada foi fornecida.")
-            return None
-
-        if resposta.strip() == "":
-            messagebox.showerror("Erro", "Entrada vazia não é permitida.")
-            return None
-
-        return resposta
-
-    except Exception as e:
-        messagebox.showerror("Erro", f"Ocorreu um erro: {e}")
-        return None
-
-    finally:
-        root.destroy()  # Fecha a janela principal mesmo que ocorra erro
-
 def normalizar(texto):
     if texto is None:
         return None
@@ -107,9 +59,9 @@ def extrair_matriz_excel(cod_turma, caminho_arquivo):
 
     return matriz_alunos
 
-caminho_arquivo = selecionar_arquivo_xlsx("Selecione o Relatório de Matrículas Ativas")
 if caminho_arquivo == None:
-    exit
+    messagebox.showerror("Erro", "Caminho do arquivo não encontrado")
+    exit()
 else:
     turma_normal = normalizar(turma)
     if turma_normal == None:
@@ -128,7 +80,7 @@ else:
             for aluno in matriz_alunos:
                 nome = aluno[2]
                 print(f"Aluno: {nome}")
-                mensagem = f"Oi, {nome}"
+                mensagem = f"Oi, {nome} " + mensagem1
 
                 # --- Trata número 1 ---
                 telefone1 = aluno[3]

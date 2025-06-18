@@ -10,3 +10,4 @@ root.attributes("-topmost", True)  # Janela sempre no topo
 root.configure(bg='#034AA6')  # Cor de fundo da janela
 tela_principal.showScreen_principal(root)
 root.mainloop()
+
